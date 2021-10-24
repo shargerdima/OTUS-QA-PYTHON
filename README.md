@@ -1,0 +1,1 @@
+Курс Python QA Engineer от OTUS
