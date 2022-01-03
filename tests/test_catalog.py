@@ -1,16 +1,14 @@
-from selenium.webdriver.common.by import By
-from pages.base_page import assert_element
+from pages.CatalogPage import CatalogPage
+from pages.elements.MainMenu import MainMenu
 
 
 def test_catalog(browser, url):
-    browser.get(url)
-    tablets = browser.find_element(By.CSS_SELECTOR, ".navbar-nav>li:nth-child(4)")
-    tablets.click()
-    title = browser.find_element(By.CSS_SELECTOR, "h2")
-    title_text = title.text
-    assert title_text == 'Tablets', 'Title invalid'
-    assert_element("#input-sort", browser, 5)
-    assert_element("#input-limit", browser, 5)
-    assert_element("#grid-view", browser, 5)
-    assert_element(".price", browser, 5)
-    
+    main_menu_page = MainMenu(browser, url)
+    main_menu_page.browser.get(url)
+    main_menu_page.click_tablet_menu_item()
+    catalog_page = CatalogPage(browser, url)
+    catalog_page .verify_tablets_title()
+    catalog_page .should_be_greed_view_button()
+    catalog_page .should_be_list_view_button()
+    catalog_page.should_be_select_for_items_limit()
+    catalog_page .should_be_select_for_sort_by()

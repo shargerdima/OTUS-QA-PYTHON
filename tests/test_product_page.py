@@ -1,15 +1,17 @@
-from selenium.webdriver.common.by import By
-from pages.base_page import assert_element
+from pages.ProductPage import ProductPage
+from pages.elements.MainMenu import MainMenu
+from pages.elements.ProductItems import ProductItems
 
 
 def test_product_page(browser, url):
-    browser.get(url)
-    tablets = browser.find_element(By.CSS_SELECTOR, ".navbar-nav>li:nth-child(4)")
-    tablets.click()
-    caption_header = browser.find_element(By.CSS_SELECTOR, "h4")
-    caption_header.click()
-    assert_element("#button-cart", browser, 5)
-    assert_element(".col-sm-3>.btn-block", browser, 5)
-    assert_element(".form-group>.form-control", browser, 5)
-    assert_element("[href='#tab-description']", browser, 5)
-    assert_element("h1", browser, 5)
+    main_menu_page = MainMenu(browser, url)
+    main_menu_page.open_browser()
+    main_menu_page.click_tablet_menu_item()
+    product_items_page = ProductItems(browser, url)
+    product_items_page.click_on_product_name()
+    product_page = ProductPage(browser, url)
+    product_page.should_be_product_name()
+    product_page.should_be_description_tab()
+    product_page.should_be_count_items_input()
+    product_page.should_be_add_to_cart_button()
+    product_page.should_be_product_price()
